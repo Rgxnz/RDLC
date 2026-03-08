@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.cmbCategorias = new System.Windows.Forms.ComboBox();
+            this.btnFiltrar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // reportViewer1
@@ -42,11 +44,32 @@
             this.reportViewer1.TabIndex = 0;
             this.reportViewer1.Load += new System.EventHandler(this.reportViewer1_Load);
             // 
+            // cmbCategorias
+            // 
+            this.cmbCategorias.FormattingEnabled = true;
+            this.cmbCategorias.Location = new System.Drawing.Point(34, 47);
+            this.cmbCategorias.Name = "cmbCategorias";
+            this.cmbCategorias.Size = new System.Drawing.Size(121, 21);
+            this.cmbCategorias.TabIndex = 1;
+            this.cmbCategorias.SelectedIndexChanged += new System.EventHandler(this.cmbCategoria_SelectedIndexChanged);
+            // 
+            // btnFiltrar
+            // 
+            this.btnFiltrar.Location = new System.Drawing.Point(161, 47);
+            this.btnFiltrar.Name = "btnFiltrar";
+            this.btnFiltrar.Size = new System.Drawing.Size(102, 23);
+            this.btnFiltrar.TabIndex = 2;
+            this.btnFiltrar.Text = "Generar Informe";
+            this.btnFiltrar.UseVisualStyleBackColor = true;
+            this.btnFiltrar.Click += new System.EventHandler(this.btnFiltrar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnFiltrar);
+            this.Controls.Add(this.cmbCategorias);
             this.Controls.Add(this.reportViewer1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -58,6 +81,8 @@
         #endregion
 
         private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        private System.Windows.Forms.ComboBox cmbCategorias;
+        private System.Windows.Forms.Button btnFiltrar;
     }
 }
 
