@@ -47,7 +47,7 @@
             // cmbCategorias
             // 
             this.cmbCategorias.FormattingEnabled = true;
-            this.cmbCategorias.Location = new System.Drawing.Point(34, 47);
+            this.cmbCategorias.Location = new System.Drawing.Point(66, 47);
             this.cmbCategorias.Name = "cmbCategorias";
             this.cmbCategorias.Size = new System.Drawing.Size(121, 21);
             this.cmbCategorias.TabIndex = 1;
@@ -55,7 +55,7 @@
             // 
             // btnFiltrar
             // 
-            this.btnFiltrar.Location = new System.Drawing.Point(161, 47);
+            this.btnFiltrar.Location = new System.Drawing.Point(204, 47);
             this.btnFiltrar.Name = "btnFiltrar";
             this.btnFiltrar.Size = new System.Drawing.Size(102, 23);
             this.btnFiltrar.TabIndex = 2;
