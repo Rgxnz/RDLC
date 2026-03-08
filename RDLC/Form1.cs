@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -22,16 +21,16 @@ namespace RDLC
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Se llama al método para cargar los datos y el informe
             CargarInforme();
-            this.reportViewer1.RefreshReport();
         }
 
         private void CargarInforme()
         {
             // 1. Configuración de la conexión a XAMPP
-            // Cambia 'TiendaDB' por el nombre de tu base de datos
             string connectionString = "Server=localhost;Database=TiendaDB;Uid=root;Pwd=;";
-            string query = "SELECT Nombre, Precio, Categoria, Stock FROM Productos";
+            // Se añade 'Id' a la consulta para que no aparezca vacío en el informe
+            string query = "SELECT Id, Nombre, Precio, Categoria, Stock FROM Productos";
 
             try
             {
@@ -39,18 +38,27 @@ namespace RDLC
                 {
                     MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
-                    da.Fill(dt); // El DataSet actúa como puente
+                    da.Fill(dt);
 
                     // 2. Configurar el ReportViewer
                     reportViewer1.LocalReport.DataSources.Clear();
-
-                    // El nombre "DataSet1" debe ser el que pusiste al agregar el Dataset al informe RDLC
-                    ReportDataSource rds = new ReportDataSource("DataSet1", dt); 
-                    
+                    ReportDataSource rds = new ReportDataSource("DataSet1", dt);
                     reportViewer1.LocalReport.DataSources.Add(rds);
-                    reportViewer1.LocalReport.ReportPath = "InformeProductos.rdlc"; // Nombre de tu archivo de informe [cite: 31]
 
-                    // 3. Refrescar para mostrar datos
+                    // Ruta del archivo RDLC (asegúrate de que esté en la carpeta bin/Debug)
+                    reportViewer1.LocalReport.ReportPath = "InformeProductos.rdlc";
+
+                    // --- LÍNEAS AÑADIDAS PARA EL FILTRO (Punto 4 de la práctica) ---
+                    // Creamos el parámetro que espera el informe
+                    // Si tienes un TextBox o ComboBox, puedes sustituir "Periféricos" por su .Text
+                    ReportParameter[] parametros = new ReportParameter[1];
+                    parametros[0] = new ReportParameter("pCategoria", "Periféricos");
+
+                    // Pasamos el parámetro al informe antes de refrescarlo
+                    reportViewer1.LocalReport.SetParameters(parametros);
+                    // -------------------------------------------------------------
+
+                    // 3. Refrescar para mostrar datos con el filtro aplicado
                     reportViewer1.RefreshReport();
                 }
             }
@@ -62,7 +70,6 @@ namespace RDLC
 
         private void reportViewer1_Load(object sender, EventArgs e)
         {
-
         }
     }
 }
