@@ -21,15 +21,16 @@ namespace RDLC
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Se llama al método para cargar los datos y el informe
+            // Solo llamamos al método, el RefreshReport se hace dentro de CargarInforme
             CargarInforme();
         }
 
         private void CargarInforme()
         {
-            // 1. Configuración de la conexión a XAMPP
+            // 1. Configuración de la conexión a XAMPP (MySQL)
             string connectionString = "Server=localhost;Database=TiendaDB;Uid=root;Pwd=;";
-            // Se añade 'Id' a la consulta para que no aparezca vacío en el informe
+
+            // IMPORTANTE: Incluimos 'Id' y 'Stock' para que no aparezcan vacíos en el informe [cite: 115, 203]
             string query = "SELECT Id, Nombre, Precio, Categoria, Stock FROM Productos";
 
             try
@@ -38,38 +39,39 @@ namespace RDLC
                 {
                     MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
-                    da.Fill(dt);
+                    da.Fill(dt); // El DataTable sirve de puente entre MySQL y el RDLC [cite: 52, 161, 182]
 
-                    // 2. Configurar el ReportViewer
+                    // 2. Limpiar y configurar el origen de datos del ReportViewer
                     reportViewer1.LocalReport.DataSources.Clear();
+
+                    // El nombre "DataSet1" debe coincidir con el nombre definido en el archivo .rdlc [cite: 13]
                     ReportDataSource rds = new ReportDataSource("DataSet1", dt);
                     reportViewer1.LocalReport.DataSources.Add(rds);
 
-                    // Ruta del archivo RDLC (asegúrate de que esté en la carpeta bin/Debug)
+                    // Establecemos la ruta del archivo (debe estar configurado como 'Copiar siempre' en propiedades) [cite: 30]
                     reportViewer1.LocalReport.ReportPath = "InformeProductos.rdlc";
 
-                    // --- LÍNEAS AÑADIDAS PARA EL FILTRO (Punto 4 de la práctica) ---
-                    // Creamos el parámetro que espera el informe
-                    // Si tienes un TextBox o ComboBox, puedes sustituir "Periféricos" por su .Text
+                    // 3. Configuración del PARÁMETRO DE FILTRO (Punto 4 de la práctica) [cite: 118, 214]
+                    // Aquí definimos qué categoría queremos filtrar (ejemplo: 'Periféricos')
                     ReportParameter[] parametros = new ReportParameter[1];
                     parametros[0] = new ReportParameter("pCategoria", "Periféricos");
 
-                    // Pasamos el parámetro al informe antes de refrescarlo
+                    // Pasamos el parámetro al motor de informes
                     reportViewer1.LocalReport.SetParameters(parametros);
-                    // -------------------------------------------------------------
 
-                    // 3. Refrescar para mostrar datos con el filtro aplicado
+                    // 4. Refrescar el visor para aplicar datos, formatos y filtros
                     reportViewer1.RefreshReport();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar datos: " + ex.Message);
+                MessageBox.Show("Error al conectar con la base de datos: " + ex.Message);
             }
         }
 
         private void reportViewer1_Load(object sender, EventArgs e)
         {
+
         }
     }
 }

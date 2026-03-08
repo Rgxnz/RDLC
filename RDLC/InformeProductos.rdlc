@@ -608,6 +608,15 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
+            <Filters>
+              <Filter>
+                <FilterExpression>=Fields!Categoria.Value</FilterExpression>
+                <Operator>Equal</Operator>
+                <FilterValues>
+                  <FilterValue>=Parameters!pCategoria.Value</FilterValue>
+                </FilterValues>
+              </Filter>
+            </Filters>
             <Top>1.79599cm</Top>
             <Left>1.76953cm</Left>
             <Height>1.8cm</Height>
@@ -639,6 +648,13 @@
     <ReportParameter Name="pCategoria">
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>DataSet1</DataSetName>
+          <ValueField>Categoria</ValueField>
+          <LabelField>Categoria</LabelField>
+        </DataSetReference>
+      </ValidValues>
     </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
