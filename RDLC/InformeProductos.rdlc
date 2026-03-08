@@ -408,8 +408,10 @@
                                     <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>12pt</FontSize>
                                     <FontWeight>Normal</FontWeight>
+                                    <Format>0.00'€';(0.00'€')</Format>
                                     <TextDecoration>None</TextDecoration>
                                     <Color>#000000</Color>
+                                    <rd:FormatSymbolCulture>es-ES</rd:FormatSymbolCulture>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
